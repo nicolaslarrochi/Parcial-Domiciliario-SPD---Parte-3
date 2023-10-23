@@ -69,12 +69,12 @@ void loop()
 {
   int pressed = keypressed(); // tecla presionada
  
-  if (digitalRead(SWITCH) == HIGH) // Si prende es contador
+  if (digitalRead(SWITCH) == HIGH) // Inicializado el switch en contador
                                    // Y lee sensor de Fuerza
   {
      lecturaFuerza = analogRead(FUERZA); // Lectura del sensor
      Serial.println(lecturaFuerza); // Muestra
-      delay(10);  
+     delay(10);  
     
      if (pressed == SUMA) // Si se presiona suma,
      {                    // sumará 1 al contador
@@ -93,23 +93,23 @@ void loop()
          }                     // retornará 99
      } 
     
-    printCount(countDigit); // Muestra números!
+    printCount(countDigit); // Muestra el conteo correspondiente
     
-    int speed = map(countDigit, 0, 99, 0, 255); // toma valores para el motor
+    int speed = map(countDigit, 0, 99, 0, 255); // toma valores
     
-    analogWrite(POSITIVO, speed); // de 0 a 50 = 0
-                                  // de 50 a 100 = +30
-    digitalWrite(NEGATIVO, HIGH); // Si se cumple gira a la derecha 
+    analogWrite(POSITIVO, speed); // de 0 a 50  = -30
+                                   // de 50 a 99  = 0 
+    digitalWrite(NEGATIVO, LOW);  // Si cumple = Gira el motor sentido contrario  
     
   }
-  else // Sino será Numeros primos
+  else // Si se presiona el switch el contador será Numeros primos
        // y lee Fotoresistencia
   {
-      lecturaFotoresistencia = analogRead(FOTORESISTENCIA); // Lectura
-      Serial.println(lecturaFotoresistencia); // Muestra
-      delay(10); 
+       lecturaFotoresistencia = analogRead(FOTORESISTENCIA); // Lectura
+       Serial.println(lecturaFotoresistencia); // Muestra
+       delay(10); 
     
-      if (pressed == SUMA) // Si se presiona suma
+       if (pressed == SUMA) // Si se presiona suma
                            // pasa al siguiente numero del array
         {
             primeIndex++;
@@ -130,13 +130,14 @@ void loop()
             }
         }
 
-        printCount(primeNumbers[primeIndex]); // Muestra el número primo correspondiente
+     printCount(primeNumbers[primeIndex]); // Muestra el número primo correspondiente
     
      int speed = map(primeNumbers[primeIndex], 0, 99, 0, 255);
-    
-     analogWrite(POSITIVO, speed); // de 0 a 50  = -30
-                                   // de 50 a 99  = 0 
-     digitalWrite(NEGATIVO, LOW);  // Si cumple = Gira sentido contrario  
+     
+     analogWrite(POSITIVO, speed); // de 0 a 50 = 0
+                                  // de 50 a 100 = +30
+     digitalWrite(NEGATIVO, HIGH); // Si se cumple gira el motor a la derecha 
+      
         
   }
   
